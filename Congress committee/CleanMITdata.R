@@ -2,7 +2,6 @@ library(readxl)
 library(tidyverse)
 library(Matrix) 
 library(dplyr)
-detach(package:plyr)
 
 
 #### Clean House data ####
@@ -60,8 +59,8 @@ house_FEMA_committee <-  house_assign %>%
   select(-congress) %>%
   select(year, state_name, cd, homeland_com, budget_com, committee_name, name, id) %>%
   arrange(year, cd, committee_name, homeland_com, budget_com) %>%
-  group_by(year, state_name, cd) %>%
   mutate(district = as.numeric(cd)) %>%
+  group_by(year, state_name, district) %>%
   summarise(house_homeland=sum(homeland_com), house_budget=sum(budget_com))
   
 #### the same district has multiple lines if they have more than one rep serving in more than one committee
@@ -123,7 +122,7 @@ senate_FEMA_committee <- senate_assign %>%
       congress == "116" ~ 2020)) %>%
   gather(key = "congress", value = "year", year1:year2)%>%
   arrange(year, state, district, homeland_committee, budget_committee) %>%
-  select(-congress, -state_code) %>%
+  select(-congress, -state_code, -district) %>%
   group_by(year, state) %>%
   summarise(senate_budget=sum(budget_committee), senate_homeland=sum(homeland_committee))
 
