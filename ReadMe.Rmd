@@ -1,0 +1,50 @@
+---
+title: "ReadMe"
+author: "Gang Chen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+This code contains several steps to construct measurements for the political influence of counties on congressional committees that oversee FEMA
+
+The house committee that oversees FEMA is COMMITTEE ON HOMELAND SECURITY (https://mcdc.missouri.edu/temp/geocorr2022_2407907312.html), subcommittee EMERGENCY MANAGEMENT AND TECHNOLOGY (https://homeland.house.gov/emergency-preparedness-response-and-recovery/#:~:text=The%20Emergency%20Management%20and%20Technology,of%20Health%20Security%20(OHS). 
+
+The Senate committee that oversees FEMA is Homeland Security and Governmental Affairs (https://www.hsgac.senate.gov/), subcommittee (EMERGING THREATS AND SPENDING OVERSIGHT)https://www.hsgac.senate.gov/subcommittees/etso/
+
+We aim to identify the House and Senate members that serve on these committees and trace whether a county was represented by these committee members, through several steps:
+1. Using data from Charles Stewart III and Jonathan Woon (MIT) (/https://web.mit.edu/17.251/www/data_page.html#2), we match the committee assignments with members and districs.
+
+2. Using data from Geocorr (https://mcdc.missouri.edu/applications/geocorr.html), we match counties with congressional districts.
+
+The boundaries of congressional districts are different in different congressional sessions.
+
+We need data for 2006–2019. The MIT data is only until 2017, so we will collect data for 2006-2017
+
+Congressional sessions are shown in https://en.wikipedia.org/wiki/List_of_United_States_Congresses. We need congress sessions 109th to 115th.
+
+Congressional District Maps (https://www.census.gov/programs-surveys/decennial-census/about/rdo/congressional-districts.110th_Congress.html#list-tab-1532737863)
+
+The congressional district map suites include three map types (national, state-based, and congressional district-based) that depict the congressional districts in effect for these congressional sessions.
+
+The congressional district boundaries are the same for the 109th, 110th, 111th, and 112th Congresses of the United States, except for in Georgia and Texas where there were changes between the 109th and 110th Congresses.
+
+## How to clean and organize the data
+1. Start with the Geocorr data. Generate long format with county, congressional sessions. Seperate county names and state.
+2. Match congressional sessions with year. Save the results.
+3. Clean the MIT data. Match committee assignments with members and districts. Identify years
+4. Match year, district, state. Create a variable indicating the members representing a county in the committee that oversee FEMA
+
+## update 3/20/2024
+master code
+1. cleanMITtdata.R
+2. cleanGeoCorr.R
+3. mergedata.R
+output file: county_FEMA_committee
+
+

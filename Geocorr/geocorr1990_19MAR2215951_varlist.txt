@@ -1,0 +1,18 @@
+List of variables on output CSV file
+
+
+
+VARIABLES ON THE OUTPUT FILE, IN LEFT TO RIGHT ORDER
+'C' INDICATES A CHARACTER VARIABLE, 'N' A NUMERIC
+    1 C cd102
+    2 C cd103  103rd Congressional District
+    3 C county
+    4 C cntyname
+    5 C fplace80
+    6 C plac80nm
+
+    7 N intptlng  Wtd centroid W longitude, degrees
+    8 N intptlat  Wtd centroid latitude, degrees
+    9 N pop  1990 POP
+   10 N afact  cd103 to county allocation factor
+   11 N AFACT2  county to cd103 allocation factor
