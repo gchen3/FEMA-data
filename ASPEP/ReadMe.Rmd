@@ -1,0 +1,14 @@
+---
+title: "ASPEP_data"
+author: "Gang Chen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+obtain data from ASPEP.
+
+data until 2016:
+https://www.openicpsr.org/openicpsr/project/101399/version/V6/view?path=/openicpsr/101399/fcr:versions/V6/aspep_counties_1993_2016.zip&type=file
+
+data 2016-2022:
+
