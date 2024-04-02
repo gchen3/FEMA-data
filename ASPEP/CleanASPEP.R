@@ -1,5 +1,7 @@
 library(tidyverse)
 library(readxl)
+library(foreign)
+
 
 filepath <- "C:/Users/Gang Chen/Dropbox/Gang Chen/Social vulnerability and RB/New data for PAR/ASPEP/"
 
@@ -9,7 +11,15 @@ aspep_2016 <- read.csv("aspep_counties_1993_2016.csv")
 
 aspep_county <- aspep_2016 %>%
   filter(year>2005) %>%
-  select(state, county_name, year, government_function, full_time_employees)
+  select(state, county_name, year, government_function, full_time_employees) %>%
+  mutate(government_function = case_when(
+    government_function == "total" ~ "Total - All Government Employment Functions",
+    government_function == "financial administration" ~ "Financial Administration")) %>%
+  filter(government_function == "Total - All Government Employment Functions" | government_function == "Financial Administration")
+
+unique(aspep_county$government_function)
+unique(emp_new$government_function)
+
 
 for (i in 17:22) {
  assign(paste0("emp",i), read_excel(paste0(i,"emp",".xlsx")))
@@ -30,6 +40,8 @@ emp_full_years <- emp_new %>%
   rename(full_time_employees = "full-time_employees") %>%
   filter(type_of_government == "County") %>%
   select(state, county_name, year, government_function, full_time_employees) %>%
+  filter(government_function == "Total - All Government Employment Functions" | government_function == "Financial Administration") %>%
+  rbind(aspep_county) %>%
   rename(gov_func = government_function,
          full_time = "full_time_employees") %>%
   tidyr::spread(key = gov_func, value = full_time) %>%
@@ -37,5 +49,8 @@ emp_full_years <- emp_new %>%
           "total" = "Total - All Government Employment Functions") %>%
   mutate(per_fiscal = fiscal/total)
 
-save(emp_full_years, file="emp_full_years.RData")
+names(aspep_county)
+names(emp_new)
 
+save(emp_full_years, file="emp_full_years.RData")
+write.dta(emp_full_years, "C:/Users/Gang Chen/Dropbox/Gang Chen/Social vulnerability and RB/New data for PAR/emp_full_years.dta")

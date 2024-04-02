@@ -1,4 +1,5 @@
 library(tidyverse)
+library(foreign)
 
 #### Merge MIT and GeoCorr data ####
 
@@ -35,3 +36,5 @@ names(county_FEMA_committee)
 head(county_FEMA_committee)
 
 save(county_FEMA_committee, file="county_FEMA_committee.RData")
+write.dta(county_FEMA_committee, "C:/Users/Gang Chen/Dropbox/Gang Chen/Social vulnerability and RB/New data for PAR/county_FEMA_committee.dta")
+
